@@ -11,8 +11,8 @@ import { ethers } from "ethers";
 const DimDogs_Abi = DimDogs_artefacts["abi"];
 // const DimDogs_ContractAddress = "0xEF7b97eb0087Bcfb7C4c7f0410FBA5d74C9789fd";
 const DimDogs_ContractAddresses = {
-  linea: "0x2C985732333256db948240FcEFc88FA6389e12Cf", goerli: "0xcb7B6A6927b3c6150859C4DeBC54DBE0c437Fc89",
-  alfajores: "0x9d3BeEAC4026d41Ca2504189fB869C964b76B050"
+  linea: "0x574aA290F6A5D8b4181eF7c8dbC282eebEb1b3AF", goerli: "0x9d3BeEAC4026d41Ca2504189fB869C964b76B050",
+  alfajores:  "0xC028dF898A418dDe242C6083e79a1e911fB8E10f"
 };
 
 
