@@ -1,323 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- CSS -->
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
-    <script type="text/javascript" src="//unpkg.com/@worldcoin/id/dist/world-id.js"></script>
-    <!-- <link rel="stylesheet" href="stylesheets/styles.css"/> -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+    <title>Dimension Doggos</title>
+    <style>
+        .banner {
+            background-color: #2a9d8f;
+            color: #f4a261;
+            text-align: center;
+            padding: 50px;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-    <title>Timely Tasks</title>
-</head>
+        .banner-btn {
+            background-color: #f4a261;
+            color: #2a9d8f;
+            border: 2px solid #e76f51;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
 
-<style>
-    #alert-wrapper {
-        overflow-y: hidden;
-        max-height: 0 !important;
-        transition: max-height 0.25s ease-out !important;
-    }
+        .banner-btn:hover {
+            background-color: #e76f51;
+            color: #f4a261;
+        }
+       .retro-btn, .nav-item, .create-doggo-btn {
+            background-color: #f4a261;
+            color: #2a9d8f;
+            border: 2px solid #e76f51;
+            transition: all 0.3s ease;
+        }
+        .nav-brand{
+            transition: all 0.3s ease;
+            color: #e76f51;
 
-    #alert-wrapper.open {
-        max-height: 100px !important;
-        transition: max-height 0.25s ease-in !important;
-    }
-</style>
+        }
 
-<body>
-    <div class="container mt-2" style="max-width: 70em">
-        <nav class="navbar bg-white navbar-light">
-            <div class="container-fluid">
-                <span class="navbar-brand m-0 h4 fw-bold" style="width:50%">Timely Tasks</span>
+        .retro-btn:hover, .nav-item:hover, .create-doggo-btn:hover {
+            background-color: #e76f51;
+            color: #f4a261;
+        }
 
-                <div class="d-flex" style="margin-right: -1.5rem;">
-                    <div class="me-4">
-                        <a class="p-2 btn btn-dark" id="bridge-actions" data-bs-toggle="modal"
-                            data-bs-target="#bridgeActionsModal">
-                            Ethereum / Skale Operations
-                        </a>
-                    </div>
-                    <!-- <span class="nav-link bg-light">
-                        Balance:<span class="rounded-pill border"> <span id="balance">0</span> eth</span>
-                    </span> -->
-                    <div id="not-verified" style="display:none" class="me-4">
-                        <a class="p-2 btn btn-dark" data-bs-toggle="modal" data-bs-target="#userFlowModal">
-                            Create profile/ Log in
-                        </a>
-                    </div>
-                    <div id="verified" style="display:none" class="me-4">
-                        <a class="p-2 btn btn-dark" data-bs-toggle="modal" data-bs-target="#profileModal"
-                            id="profile-btn">
-                            My Profile
-                        </a>
-                    </div>
-                </div>
+        .retro-modal {
+            background-color: #f4a261;
+            border: 2px solid #2a9d8f;
+            color: #2a9d8f;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 200;
+            
+        }
 
+        #profileModal {
+        width: 50%; 
+        height: 50%; 
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        z-index: 200; 
+        overflow: auto; /* Allow scrolling if the content overflows */
+        }
 
-        </nav>
-        <div id="alert-wrapper">
-            <div class="alert alert-info mt-2 alert-dismissible fade show" role="alert">
-                <span id="notification">⌛ Loading...</span>
-            </div>
-        </div>
-        <div class="mb-4 p-3 create-button">
-            <a class="p-2 btn btn-dark" data-bs-toggle="modal" data-bs-target="#addModal">
-                Create a Task
-            </a>
-        </div>
-        <main id="tasks" class="row"> </main>
+        /* Additional styling for the content inside the modal */
+        #profileModal .my-account,
+        #profileModal .doggo-section {
+        margin-bottom: 20px;
+        }
 
+        .retro-bar-bg {
+            background-color: #f4a261;
+            border: 2px solid #2a9d8f;
+        }
 
+        .retro-bar-fg {
+            background-color: #2a9d8f;
+        }
+
+        .navbar {
+            background-color: #2a9d8f;
+        }
+
+        .content-wrapper {
+            max-width: 800px; /* Fixed width */
+            margin: 0 auto; /* Center content */
+        }
+
+        .card-img {
+            max-width: 600px; /* Fixed width for images */
+            margin: 0 auto; /* Center images */
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center; /* Center buttons */
+        }
+
+        .retro-btn {
+            padding: 10px 20px; /* Increase padding for larger buttons */
+        }
+
+        .feed-btn {
+            margin-right: 10px; /* Space between the Feed and Pet buttons */
+        }
+
+        .pet-btn {
+            margin-left: 10px; /* Space between the Pet and Feed buttons */
+        }
+
+        .bury-btn {
+            margin-right: 30px; /* Space between the Revive and bury buttons */
+        }
+
+        .revive-btn {
+            margin-left: 30px; /* Space between the Bury and revive buttons */
+        }
+
+        .create-doggo-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Black with 50% opacity */
+            z-index: 100; /* Ensure it's above other content but below the modals */
+            }
+
+    </style>
+<script defer src="main.js"></script></head>
+<body class="bg-gray-200">
+    <!-- Navbar -->
+
+    <div class="banner" id="banner">
+        <h1 class="text-4xl font-bold mb-4">Dimension Doggos</h1>
+        <p class="text-xl mb-8">Breed your dimension canines, take care of them and increase their power</p>
+        <button class="banner-btn" id="connect-btn">Connect to Metamask</button>
     </div>
 
-    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" id="profile-content">
+    <div class="hidden" id="all_content"> 
 
-            </div>
+    <nav class="navbar flex justify-between p-4 text-white">
+        <div class="nav-brand flex items-center" style="display: inline;" >
+            <span class="text-2xl font-bold">Dimension Doggos</span> 🐾
         </div>
-    </div>
 
-    <div class="modal" tabindex="-1" role="dialog" id="bridgeActionsModal">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#transferToSkale" role="tab"
-                            aria-controls="home" aria-selected="true">Deposit ETH into Skale chain</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#moveBackToEth" role="tab"
-                            aria-controls="profile" aria-selected="false">Withdraw ETH</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#poolActions" role="tab"
-                            aria-controls="contact" aria-selected="false">Community pool</a>
-                    </li>
-                </ul>
+        <div class="flex space-x-4" id="menu-items">
+            <div class="nav-item cursor-pointer px-4 py-2 rounded-lg" id="menu-items">
+                Profile
+            </div>
+            </div>
+       
+    </nav>
 
-                <div class="tab-content" id="myTabContent">
+    
+    
 
-                    <div class="tab-pane fade show active p-3 m-2 " id="transferToSkale" role="tabpanel"
-                        aria-labelledby="to-skale-tab">
-
-                        <p class="pb-2">
-                        <h6>Please ensure that you have switched your metamask to the rinkeby test network</h6>
-                        </p>
-                        <form id="">
-                            <div class="form-row">
-                                <div class="col">
-                                    <input type="number" id="bridgedEthTransferAmount" class="form-control mb-2"
-                                        placeholder="Enter the amount of eth you want to transfer/bridge" />
-                                </div>
-                            </div>
-                        </form>
-                        <button type="button" class="btn btn-danger" id="transferToSkaleBtn"> Transfer funds
-                        </button>
+    <div class="content-wrapper" id="content">
+        <div class="grid grid-cols-1 gap-4 p-4" id="holder"> <!-- Updated to one column -->
+            <!-- Repeat the below div 5 times -->
+            <div class="bg-white rounded-lg shadow-lg p-4 flex flex-col cursor-pointer" onclick="toggleDetails(this)">
+                <div class="bg-white rounded-lg shadow-md flex-1">
+                    <img class="card-img w-full object-cover rounded-t-lg" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz48c3ZnIGZpbGw9J25vbmUnIHZpZXdCb3g9JzAgMCAyMDQ4IDIwMDAnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHJlY3Qgd2lkdGg9JzIwNDgnIGhlaWdodD0nMmUzJyBmaWxsPScjODlmN2ZlJy8+PHBhdGggZD0nbTE0NDMgOTg0LjVjMCAyMzIuNzktMTkyLjA3IDQyMS41LTQyOSA0MjEuNXMtNDI5LTE4OC43MS00MjktNDIxLjVjMC0yMzIuNzkgMTkyLjA3LTQyMS41IDQyOS00MjEuNXM0MjkgMTg4LjcxIDQyOSA0MjEuNXonIGZpbGw9JyNmMzc3MzUnLz48cGF0aCBkPSdtNTk5LjIgOTgxLjA5Yy01OS4yMDUgMTQ1LjA0LTE3OS4zNSAxNzQuOTgtMjQzLjU2IDE0NS4wNC02OS41MDctMjIuOTktOTAuOTU5LTc3Ljc0LTUxLjkzNS0xOTEuMyA0LjQ1MS0zOS4xODkgMzEuMzk1LTY4LjMxNiA1My4zNTQtMTIxLjggNTcuNjE5LTE0MC4zMiA5OC40MTYtMTYwLjM1IDE2NC4zNS0xMzQuNjEgMjIxLjM3IDY4LjYwMyAyMjIuNTkgNTAuNTcyIDc3Ljc5NCAzMDIuNjZ6JyBmaWxsPScjODg3NGEzJy8+PHBhdGggZD0nbTE0NjIuNyAxMDA4LjdjNTkuMjEgMTQ1LjAzIDE3OS4zNSAxNzQuOTggMjQzLjU3IDE0NS4wMyA2OS41LTIyLjk5IDkwLjk2LTc3Ljc0IDUxLjkzLTE5MS4zLTQuNDUtMzkuMTg5LTMxLjM5LTY4LjMxNy01My4zNS0xMjEuOC01Ny42Mi0xNDAuMzItOTguNDItMTYwLjM1LTE2NC4zNS0xMzQuNjEtMjIxLjM4IDY4LjYwMy0yMjIuNTkgNTAuNTcyLTc3LjggMzAyLjY3eicgZmlsbD0nIzg4NzRhMycvPjxwYXRoIGQ9J003NzUuNDk3IDgzM0w5MjcgOTU1TTc3NSA5NTVMOTI2LjUwMyA4MzMnIHN0cm9rZT0nIzBhMDkwOCcgc3Ryb2tlLXdpZHRoPSc4Jy8+PHBhdGggZD0nTTEwNzguNSA4MzNMMTIzMCA5NTVNMTA3OCA5NTVMMTIyOS41IDgzMycgc3Ryb2tlPScjMGEwOTA4JyBzdHJva2Utd2lkdGg9JzgnLz48cGF0aCBkPSdtMTAyMC41IDEwOTcuOWMtOC4xMyA4LjQ5LTIxLjc4NSA4LjE4LTI5LjUwNS0wLjY3bC00OS01Ni4xMWMtMTEuMzMtMTIuOTgtMi4wNS0zMy4yNSAxNS4xOC0zMy4xNiAzNi4xMyAwLjE5IDY2LjI1NSAwLjM1IDEwMi4xNiAwLjU0IDE3LjU2IDAuMSAyNi40OSAyMS4xNSAxNC4zNSAzMy44M2wtNTMuMTggNTUuNTd6JyBmaWxsPScjMGEwOTA4Jy8+PHBhdGggZD0nTTEwMDcgMTEwNEwxMDA4IDExNjZNMTA1MiAxMjE4QzEwMjcuMTcgMTEzNy45NyA5ODAuMjY5IDExNjAuMjUgOTY0IDEyMTgnIHN0cm9rZT0nIzBhMDkwOCcgc3Ryb2tlLXdpZHRoPSc4Jy8+Jzwvc3ZnPg=="  alt="Jay">
+                    <div class="p-4 text-center text-gray-700">
+                        <p>Jay</p>
                     </div>
-                    <div class="tab-pane fade p-3" id="moveBackToEth" role="tabpanel" aria-labelledby="back-to-eth-tab">
-                        <ul class="nav nav-tabs" id="moveBackInnerTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#exitSchain" role="tab"
-                                    aria-controls="exit eth from schain tab" aria-selected="true">Exit Eth from
-                                    schain</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#withdrawEthFromBox" role="tab"
-                                    aria-controls="withdraw mini tab" aria-selected="false">Withdraw ETH from lock
-                                    box</a>
-                            </li>
-
-                        </ul>
-
-                        <div class="tab-content" id="moveBackInnerTabContent">
-                            <div class="tab-pane fade show active p-1" id="exitSchain" role="tabpanel"
-                                aria-labelledby="exit-schain-tab">
-                                <p class="pb-2">
-                                <h6> Please ensure that on the schain network on metamask</h6>
-                                </p>
-
-                                <form id="">
-                                    <div class="form-row p-1">
-                                        <div class="col">
-                                            <input type="number" id="ethWithdrawAmount" class="form-control mb-2"
-                                                placeholder="Enter the amount of eth you want exit from the schain" />
-                                        </div>
-                                    </div>
-                                </form>
-                                <button type="button" class="btn btn-success" id="exitSkaleBtn" data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="To be able transfer your eth back, please ensure you have enough funds in the skale community pool to fund the transfer ">
-                                    Exit from Skale
-                                </button>
-
-                            </div>
-                            <div class="tab-pane fade p-1" id="withdrawEthFromBox" role="tabpanel"
-                                aria-labelledby="withdraw eth tab">
-                                <p class="pb-2">
-                                <h6>Please ensure that you have switched your metamask to the rinkeby test network</h6>
-                                </p>
-
-
-                                <button type="button" class="btn btn-success" id="withdrawIntoEthBtn"
-                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                    title="All the eth in the lock will be withdrawn"> Withdraw
-                                    ETH </button>
-                            </div>
+                    <!-- Extra Details -->
+                    <div class="details hidden p-4">
+                        <label class="text-lg font-bold">Happiness:</label>
+                        <div class="retro-bar-bg w-full rounded-full h-4">
+                            <div class="retro-bar-fg text-xs leading-none py-1 text-center text-white rounded-full h-full" style="width: 70%"></div>
                         </div>
-
-                    </div>
-                    <div class=" tab-pane fade p-3" id="poolActions" role="tabpanel" aria-labelledby="contact-tab">
-
-                        <h6>
-                            Community
-                            Pool Balance: <span class="badge bg-secondary" id="commieBalance"></span>
-                            <button type="button" class="btn btn-sm" id="showCommieBalance"> Show Balance
-                            </button>
-                        </h6>
-                        <ul class="nav nav-tabs" id="poolActionInnerTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#depositToPool" role="tab"
-                                    aria-controls="exit eth from schain tab" aria-selected="true">Fund Pool</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#withdrawFromPool" role="tab"
-                                    aria-controls="withdraw mini tab" aria-selected="false">Withdraw from
-                                    Pool
-                                </a>
-                            </li>
-
-                        </ul>
-
-                        <div class="tab-content" id="poolActionInnerTabContent">
-                            <div class="tab-pane fade show active p-1" id="depositToPool" role="tabpanel"
-                                aria-labelledby="deposit-to-pool-tab">
-                                <p class="pb-2">
-                                <h6>Please ensure that you have switched your metamask to the rinkeby test
-                                    network</h6>
-                                </p>
-
-                                <form id="">
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <input type="number" id="CommunityPoolAmount" class="form-control mb-2"
-                                                placeholder="Enter the amount of eth you want to fund the pool with" />
-                                        </div>
-                                    </div>
-                                </form>
-                                <button type="button" class="btn btn-danger" id="transferToPoolBtn"
-                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                    title="You have to transfer the minimum amount that will allow you exit your eth from skale chain">
-                                    Fund
-                                    Community Pool
-                                </button>
-
-                            </div>
-                            <div class="tab-pane fade p-1" id="withdrawFromPool" role="tabpanel"
-                                aria-labelledby="withdraw eth tab">
-                                <p class="pb-2">
-                                <h6>Please ensure that you have switched your metamask to the rinkeby test
-                                    network</h6>
-                                </p>
-
-                                <button type="button" class="btn btn-success" id="withdrawFromPoolBtn">
-                                    Withdraw funds
-                                    from pool
-                                </button>
-                            </div>
+                        <label class="text-lg font-bold">Hunger:</label>
+                        <div class="retro-bar-bg w-full rounded-full h-4">
+                            <div class="retro-bar-fg text-xs leading-none py-1 text-center text-white rounded-full h-full" style="width: 40%"></div>
                         </div>
-
+                        <p class="text-lg font-bold">Power: 50</p>
+                        <p class="text-lg font-bold">Number of times revived: 3</p>
                     </div>
                 </div>
-
-
-            </div>
-        </div>
-    </div>
-
-
-    <div class="modal" tabindex="-1" role="dialog" id="userFlowModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" id="user-dialogue-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title">Timely Tasks</h5>
-                </div>
-                <div class="modal-body">
-                    <div id="world-holder">
-                        <h3>Verify your uniqueness with worldcoin</h3>
-                        <div id="world-id-container"></div>
-                    </div>
-
-                    <div class="form-check pt-3">
-                        <input class="form-check-input" type="checkbox" value="" id="mockWorldcheckbox">
-                        <label class="form-check-label" for="mockWorldcheckbox">
-                            Mock Worldcoin response
-                        </label>
-                    </div>
+                <div class="mt-4 buttons-container">
+                    <button class="retro-btn feed-btn px-4 py-2 rounded-lg font-bold">Feed</button>
+                    <button class="retro-btn pet-btn px-4 py-2 rounded-lg font-bold">Pet</button>
                 </div>
             </div>
-        </div>
-    </div>
 
-
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="newTaskModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newTaskModalLabel">New Task</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="newTaskForm">
-                        <div class="form-row">
-                            <div class="col">
-                                <input type="text" id="newTaskDesc" class="form-control mb-2"
-                                    placeholder="Enter Description of task" />
-                            </div>
-                            <div class="col">
-                                <input type="text" id="newProof" class="form-control mb-2"
-                                    placeholder="Enter Expected deliverable of the accomplished task" />
-                            </div>
-                            <div class="col">
-                                <input type="number" id="newTaskPrize" class="form-control mb-2"
-                                    placeholder="Enter Task Prize in ether" />
-                            </div>
-                            <div class="col">
-                                <input type="number" id="lockDuration" class="form-control mb-2"
-                                    placeholder="Enter Lock duration in seconds" />
-                            </div>
-                            <div class="col">
-                                <input type="text" id="contactinfo" class="form-control mb-2"
-                                    placeholder="Enter a means of contacting you" />
-                            </div>
+            <div class="bg-white rounded-lg shadow-lg p-4 flex flex-col cursor-pointer" onclick="toggleDetails(this)">
+                <div class="bg-white rounded-lg shadow-md flex-1">
+                    <img class="card-img w-full object-cover rounded-t-lg" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz48c3ZnIGZpbGw9J25vbmUnIHZpZXdCb3g9JzAgMCAyMDQ4IDIwMDAnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHJlY3Qgd2lkdGg9JzIwNDgnIGhlaWdodD0nMmUzJyBmaWxsPScjODlmN2ZlJy8+PHBhdGggZD0nbTE0NDMgOTg0LjVjMCAyMzIuNzktMTkyLjA3IDQyMS41LTQyOSA0MjEuNXMtNDI5LTE4OC43MS00MjktNDIxLjVjMC0yMzIuNzkgMTkyLjA3LTQyMS41IDQyOS00MjEuNXM0MjkgMTg4LjcxIDQyOSA0MjEuNXonIGZpbGw9JyNmMzc3MzUnLz48cGF0aCBkPSdtNTk5LjIgOTgxLjA5Yy01OS4yMDUgMTQ1LjA0LTE3OS4zNSAxNzQuOTgtMjQzLjU2IDE0NS4wNC02OS41MDctMjIuOTktOTAuOTU5LTc3Ljc0LTUxLjkzNS0xOTEuMyA0LjQ1MS0zOS4xODkgMzEuMzk1LTY4LjMxNiA1My4zNTQtMTIxLjggNTcuNjE5LTE0MC4zMiA5OC40MTYtMTYwLjM1IDE2NC4zNS0xMzQuNjEgMjIxLjM3IDY4LjYwMyAyMjIuNTkgNTAuNTcyIDc3Ljc5NCAzMDIuNjZ6JyBmaWxsPScjODg3NGEzJy8+PHBhdGggZD0nbTE0NjIuNyAxMDA4LjdjNTkuMjEgMTQ1LjAzIDE3OS4zNSAxNzQuOTggMjQzLjU3IDE0NS4wMyA2OS41LTIyLjk5IDkwLjk2LTc3Ljc0IDUxLjkzLTE5MS4zLTQuNDUtMzkuMTg5LTMxLjM5LTY4LjMxNy01My4zNS0xMjEuOC01Ny42Mi0xNDAuMzItOTguNDItMTYwLjM1LTE2NC4zNS0xMzQuNjEtMjIxLjM4IDY4LjYwMy0yMjIuNTkgNTAuNTcyLTc3LjggMzAyLjY3eicgZmlsbD0nIzg4NzRhMycvPjxwYXRoIGQ9J003NzUuNDk3IDgzM0w5MjcgOTU1TTc3NSA5NTVMOTI2LjUwMyA4MzMnIHN0cm9rZT0nIzBhMDkwOCcgc3Ryb2tlLXdpZHRoPSc4Jy8+PHBhdGggZD0nTTEwNzguNSA4MzNMMTIzMCA5NTVNMTA3OCA5NTVMMTIyOS41IDgzMycgc3Ryb2tlPScjMGEwOTA4JyBzdHJva2Utd2lkdGg9JzgnLz48cGF0aCBkPSdtMTAyMC41IDEwOTcuOWMtOC4xMyA4LjQ5LTIxLjc4NSA4LjE4LTI5LjUwNS0wLjY3bC00OS01Ni4xMWMtMTEuMzMtMTIuOTgtMi4wNS0zMy4yNSAxNS4xOC0zMy4xNiAzNi4xMyAwLjE5IDY2LjI1NSAwLjM1IDEwMi4xNiAwLjU0IDE3LjU2IDAuMSAyNi40OSAyMS4xNSAxNC4zNSAzMy44M2wtNTMuMTggNTUuNTd6JyBmaWxsPScjMGEwOTA4Jy8+PHBhdGggZD0nTTEwMDcgMTEwNEwxMDA4IDExNjZNMTA1MiAxMjE4QzEwMjcuMTcgMTEzNy45NyA5ODAuMjY5IDExNjAuMjUgOTY0IDEyMTgnIHN0cm9rZT0nIzBhMDkwOCcgc3Ryb2tlLXdpZHRoPSc4Jy8+Jzwvc3ZnPg=="  alt="Jay">
+                    <div class="p-4 text-center text-gray-700">
+                        <p>Jay</p>
+                    </div>
+                    <!-- Extra Details -->
+                    <div class="details hidden p-4">
+                        <label class="text-lg font-bold">Happiness:</label>
+                        <div class="retro-bar-bg w-full rounded-full h-4">
+                            <div class="retro-bar-fg text-xs leading-none py-1 text-center text-white rounded-full h-full" style="width: 70%"></div>
                         </div>
-                    </form>
+                        <label class="text-lg font-bold">Hunger:</label>
+                        <div class="retro-bar-bg w-full rounded-full h-4">
+                            <div class="retro-bar-fg text-xs leading-none py-1 text-center text-white rounded-full h-full" style="width: 40%"></div>
+                        </div>
+                        <p class="text-lg font-bold">Power: 50</p>
+                        <p class="text-lg font-bold">Number of times revived: 3</p>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light border" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="newTaskBtn">
-                        Add Task
-                    </button>
+                <div class="mt-4 buttons-container">
+                    <button class="retro-btn feed-btn px-4 py-2 rounded-lg font-bold">Feed</button>
+                    <button class="retro-btn pet-btn px-4 py-2 rounded-lg font-bold">Pet</button>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-        crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/ethereum-blockies@0.1.1/blockies.min.js"></script>
+    </div>
 
-<script type="text/javascript" src="main.js"></script></body>
+    <button class="create-doggo-btn" onclick="openModal('createDoggoModal')">
+        Create a Doggo
+    </button >
 
+    
+
+
+
+    <div class="retro-modal relative" id="createDoggoModal">
+        <!-- Close (X) Button at Top Right -->
+        <button class="absolute top-4 right-4 bg-red-600 text-white w-6 h-6 flex justify-center items-center rounded-full" onclick="closeModal('createDoggoModal')">X</button>
+    
+        <h2 class="text-2xl font-bold mb-4">Create a Doggo</h2>
+        <form>
+            <label for="name" class="text-lg font-bold">Name:</label>
+            <input type="text" id="dog_name" name="name" class="px-2 py-1 rounded-lg mb-4">
+            <!-- <p class="text-lg font-bold">Cost: 4 ETH</p> -->
+        </form>
+        <!-- Create Button -->
+        <button class="retro-btn px-4 py-2 rounded-lg font-bold mt-4" id="create-doggo-btn">Create</button>
+    </div>
+
+    <div class="retro-modal hidden" id="loginModal">
+        <button class="absolute top-4 right-4 bg-red-600 text-white w-6 h-6 flex justify-center items-center rounded-full" onclick="closeModal('loginModal')">X</button>
+        <h2 class="text-2xl font-bold mb-4">Login/Sign Up</h2>
+        <form>
+            <label for="username" class="text-lg font-bold">Username:</label>
+            <input type="text" id="username" name="username" class="px-2 py-1 rounded-lg mb-4">
+        </form>
+        <button class="retro-btn px-4 py-2 rounded-lg font-bold mt-4" id="auth-btn">Submit</button>
+    </div>
+
+    <div class="retro-modal hidden" id="profileModal">
+        <button class="absolute top-4 right-4 bg-red-600 text-white w-6 h-6 flex justify-center items-center rounded-full" onclick="closeModal('profileModal')">X</button>
+        <h2 class="text-2xl font-bold mb-4">Profile</h2>
+        <div class="my-account">
+            <h3 class="text-xl font-bold mb-2">My Account:</h3>
+            <p>Username: <span id="profile-username"></span></p>
+            <p>Chains: <span id="profile-chains"></span></p>
+            <p>Total Doggos: <span id="profile-total-doggos"></span></p>
+        </div>
+        <div class="doggo-section">
+            <h3 class="text-xl font-bold mb-2">My Doggos:</h3>
+            <!-- Doggo details will be populated here -->
+            <p> Linea: <span id="profile-linea-doggos"></span> None </p></p>
+            <p> Goerli: <span id="profile-goerli-doggos"></span></p> None</p>
+            <p> Alfajores: <span id="profile-alfajores-doggos"></span> NOne</p></p>
+        </div>
+    </div>
+
+    <div class="retro-modal hidden" id="associateModal">
+        <button class="absolute top-4 right-4 bg-red-600 text-white w-6 h-6 flex justify-center items-center rounded-full" onclick="closeModal('associateModal')">X</button>
+        <h2 class="text-2xl font-bold mb-4">Choose Chain</h2>
+        <form>
+            <div>
+            <label for="address" class="text-lg font-bold">Address:</label>
+            <input type="text" id="associate-address" name="address" class="px-2 py-1 rounded-lg mb-4" placeholder="Enter address">
+            </div>
+            <div>
+            <label for="chain" class="text-lg font-bold">Chain:</label>
+            <select id="associate-chain" name="chain" class="px-2 py-1 rounded-lg mb-4">
+                <option value="alfajores">alfajores</option>
+                <option value="linea">linea-goerli</option>
+                <option value="goerli">goerli</option>
+            </select>
+            </div>
+        </form>
+        <button class="retro-btn px-4 py-2 rounded-lg font-bold mt-4" id="associate-address-btn">Submit</button>
+    </div>
+    
+
+    <div class="overlay hidden" id="overlay"></div>
+    
+    
+
+    <script>
+
+        function openModal(element_id) {
+            document.getElementById(element_id).style.display = 'flex';
+            document.getElementById('overlay').classList.remove('hidden');
+        }
+
+        function closeModal(element_id) {
+            document.getElementById(element_id).style.display = 'none';
+            document.getElementById('overlay').classList.add('hidden');
+        }
+
+        function toggleDetails(element) {
+        const detailsElement = element.querySelector('.details');
+        detailsElement.classList.toggle('hidden');
+        }
+
+        
+    </script>
+</body>
 </html>

@@ -20,7 +20,7 @@ const paths = {
   src: path.resolve(__dirname, './static'),
 
   // Production build files
-  build: path.resolve(__dirname, './dist'),
+  build: path.resolve(__dirname, './docs'),
 
   // Static files that get copied to build folder
   public: path.resolve(__dirname, './public')
@@ -31,8 +31,7 @@ const prod = {
   devtool: false,
   output: {
     path: paths.build,
-    publicPath: '/',
-    filename: '[name].[contenthash].bundle.js'
+    publicPath: '',
   },
   performance: {
     hints: false,
