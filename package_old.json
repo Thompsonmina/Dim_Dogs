@@ -1,0 +1,35 @@
+{
+  "main": "index.js",
+  "scripts": {
+    "prettier": "prettier --write 'src/**/*.sol'",
+    "prettier:list": "prettier --list-different 'src/**/*.sol'",
+    "prettier:check": "prettier --check 'src/**/*.sol'",
+    "solhint": "solhint --config ./.solhint.json 'src/**/*.sol' --fix",
+    "solhint:check": "solhint --config ./.solhint.json 'src/**/*.sol'",
+    "lint": "npm run prettier && npm run solhint",
+    "lint:check": "npm run prettier:check && npm run solhint:check",
+    "dev": "node index.js",
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "babel-loader": "^8.0.0",
+    "file-loader": "^6.2.0",
+    "friendly-errors-webpack-plugin": "1.7.0",
+    "html-webpack-plugin": "3.2.0",
+    "prettier": "^2.5.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
+    "solhint": "^3.3.6",
+    "webpack": "4.29.6",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "@metamask/sdk": "^0.5.6",
+    "esbuild-loader": "^2.0.0",
+    "ethers": "^5.7.0",
+    "kubo-rpc-client": "^3.0.1",
+    "web3": "^1.7.5"
+  }
+}

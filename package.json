@@ -1,0 +1,49 @@
+{
+    "name": "Dim-Dogs",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "description": "Bundle js-ipfs with Webpack",
+    "keywords": [],
+    "license": "MIT",
+    "scripts": {
+        "prettier": "prettier --write 'src/**/*.sol'",
+        "prettier:list": "prettier --list-different 'src/**/*.sol'",
+        "prettier:check": "prettier --check 'src/**/*.sol'",
+        "solhint": "solhint --config ./.solhint.json 'src/**/*.sol' --fix",
+        "solhint:check": "solhint --config ./.solhint.json 'src/**/*.sol'",
+        "lint": "npm run prettier && npm run solhint",
+        "lint:check": "npm run prettier:check && npm run solhint:check",
+        "clean": "rimraf ./dist",
+        "build": "webpack --env production",
+        "serve": "webpack serve",
+        "start": "npm run serve"
+    },
+    "browserslist": [
+        "last 1 Chrome version"
+    ],
+    "dependencies": {
+        "@metamask/sdk": "^0.5.6",
+        "dotenv": "^16.3.1",
+        "ethers": "^5.7.0",
+        "kubo-rpc-client": "^3.0.1",
+        "web3": "^1.7.5"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.13.10",
+        "@babel/preset-env": "^7.13.12",
+        "babel-loader": "^8.2.3",
+        "copy-webpack-plugin": "^10.0.0",
+        "css-loader": "^6.2.0",
+        "html-webpack-plugin": "^5.3.2",
+        "node-polyfill-webpack-plugin": "^2.0.1",
+        "playwright": "^1.12.3",
+        "rimraf": "^3.0.2",
+        "style-loader": "^3.1.0",
+        "test-util-ipfs-example": "^1.0.2",
+        "webpack": "^5.45.1",
+        "webpack-cli": "^4.7.2",
+        "webpack-dev-server": "^4.6.0",
+        "webpack-merge": "^5.8.0"
+    }
+}
